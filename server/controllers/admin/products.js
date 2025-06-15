@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import Product from "../../models/Product.js";
 import { mapProductResponse } from "../../helpers/product-mapper.js";
 
@@ -7,6 +8,7 @@ const createProduct = async (req, res, next) => {
       name,
       label,
       description,
+      sku,
       price,
       currency,
       stockQuantity,
@@ -14,9 +16,11 @@ const createProduct = async (req, res, next) => {
     } = req.body
 
     const productModel = {
+      uuid: uuidv4(),
       name,
       label,
       description,
+      sku,
       price,
       currency,
       stockQuantity,
@@ -24,7 +28,6 @@ const createProduct = async (req, res, next) => {
     }
 
     const product = await Product.create(productModel)
-
     res.status(200).send({ data: mapProductResponse(product) })
   } catch (err) {
     next(err)
@@ -59,8 +62,7 @@ const updateProduct = async (req, res, next) => {
       { $set: productModel },
       { new: true }
     )
-
-    res.status(201).send({ data: mapProductResponse(product) })
+    res.status(200).send({ data: mapProductResponse(product) })
   } catch (err) {
     next(err)
   }

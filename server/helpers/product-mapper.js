@@ -1,11 +1,12 @@
 export const mapProductResponse = (product) => {
   return {
-    email: product.email,
-    firstName: product.firstName,
-    middleName: product.middleName,
-    lastName: product.lastName,
-    suffix: product.suffix,
-    addresses: product.addresses,
-    cart: product.cart,
+    name: product.name,
+    label: product.label,
+    description: product.description,
+    sku: product.sku,
+    price: product.price,
+    currency: product.currency,
+    stockQuantity: product.stockQuantity,
+    isActive: product.isActive,
   }
 }

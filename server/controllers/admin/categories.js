@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import Category from "../../models/Category.js";
 import { mapCategoryResponse } from "../../helpers/category-mapper.js";
 
@@ -11,6 +12,7 @@ const createCategory = async (req, res, next) => {
     } = req.body
 
     const categoryModel = {
+      uuid: uuidv4(),
       name,
       label,
       description,
@@ -18,7 +20,6 @@ const createCategory = async (req, res, next) => {
     }
 
     const category = await Category.create(categoryModel)
-
     res.status(200).send({ data: mapCategoryResponse(category) })
   } catch (err) {
     next(err)
@@ -47,8 +48,7 @@ const updateCategory = async (req, res, next) => {
       { $set: categoryModel },
       { new: true }
     )
-
-    res.status(201).send({ data: mapCategoryResponse(category) })
+    res.status(200).send({ data: mapCategoryResponse(category) })
   } catch (err) {
     next(err)
   }
