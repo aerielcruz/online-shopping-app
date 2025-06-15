@@ -2,7 +2,6 @@ import Product from "../models/Product.js";
 import { mapProductResponse } from "../helpers/product-mapper.js";
 
 const getProducts = async (req, res, next) => {
-  console.log('getProducts')
   try {
     const { id, name } = req.query
     const isAdmin = req.user.role === 'admin'
