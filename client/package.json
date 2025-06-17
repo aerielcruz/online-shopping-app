@@ -10,6 +10,9 @@
     "preview": "vite preview",
     "test": "mocha"
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "dependencies": {
     "mocha": "^11.6.0",
     "react": "^19.1.0",
