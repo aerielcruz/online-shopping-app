@@ -11,12 +11,14 @@ import { Cart } from '../pages/Cart';
 import { Profile } from '../pages/Profile';
 
 export const RouteManager = () => {
-  const { user, fetchUser } = useUser()
+  const { fetchUser, loading } = useUser()
   const location = useLocation();
 
   useEffect(() => {
     fetchUser()
   }, [location.pathname])
+
+  if (loading) return null;
 
   return (
     <Routes>

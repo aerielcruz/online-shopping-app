@@ -34,7 +34,6 @@ const CartItem = ({ product, fetchCart }) => {
 }
 
 export const Cart = () => {
-  const { user, loading: userLoading } = useUser();
   const { getCart } = useCart();
   const [cart, setCart] = useState([]);
 
@@ -52,8 +51,6 @@ export const Cart = () => {
   }
 
   const total = cart.length ? cart.reduce((sum, product) => sum + product.price, 0) : 0;
-
-  if (userLoading) return null;
 
   return (
     <div>
