@@ -27,7 +27,6 @@ const createUser = async (req, res, next) => {
       middleName,
       lastName,
       suffix,
-      addresses: [],
       cart: []
     }
 
@@ -47,7 +46,6 @@ const updateUser = async (req, res, next) => {
       middleName,
       lastName,
       suffix,
-      addresses,
       cart
     } = req.body
 
@@ -57,7 +55,6 @@ const updateUser = async (req, res, next) => {
       middleName,
       lastName,
       suffix,
-      addresses,
       cart
     }
 

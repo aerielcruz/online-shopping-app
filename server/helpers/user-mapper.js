@@ -5,7 +5,6 @@ export const mapUserResponse = (user) => {
     middleName: user.middleName,
     lastName: user.lastName,
     suffix: user.suffix,
-    addresses: user.addresses,
     cart: user.cart,
   }
 }

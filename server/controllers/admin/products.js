@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import Product from "../../models/Product.js";
 import { mapProductResponse } from "../../helpers/product-mapper.js";
+import { generateImageUrl } from "../../utils/generate-image-url.js";
 
 const createProduct = async (req, res, next) => {
   try {
@@ -8,23 +9,18 @@ const createProduct = async (req, res, next) => {
       name,
       label,
       description,
-      sku,
       price,
       currency,
-      stockQuantity,
-      isActive,
     } = req.body
 
     const productModel = {
-      uuid: uuidv4(),
+      referenceId: uuidv4(),
       name,
       label,
       description,
-      sku,
       price,
       currency,
-      stockQuantity,
-      isActive,
+      imageUrl: generateImageUrl(name),
     }
 
     const product = await Product.create(productModel)
@@ -37,14 +33,12 @@ const createProduct = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
   try {
     const {
-      uuid,
+      referenceId,
       name,
       label,
       description,
       price,
       currency,
-      stockQuantity,
-      isActive,
     } = req.body
 
     const productModel = {
@@ -53,12 +47,10 @@ const updateProduct = async (req, res, next) => {
       description,
       price,
       currency,
-      stockQuantity,
-      isActive,
     }
 
     const product = await Product.findOne(
-      { uuid },
+      { referenceId },
       { $set: productModel },
       { new: true }
     )

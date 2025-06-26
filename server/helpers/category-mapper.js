@@ -1,9 +1,8 @@
 export const mapCategoryResponse = (category) => {
   return {
-    uuid: category.uuid,
+    referenceId: category.referenceId,
     name: category.name,
     label: category.label,
     description: category.description,
-    isActive: category.isActive,
   }
 }

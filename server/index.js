@@ -10,6 +10,12 @@ import routes from './routes/index.js'
 const app = express()
 const port = 3000
 
+// Must be set before using any routes or middlewares that require CORS
+// This is only for development purposes, in production you should set CORS headers properly
+if (process.env.NODE_ENV === 'development') {
+	app.use(cors({ credentials: true, origin: 'http://localhost:5173' }))
+}
+
 app
 	.use(express.json())
 	.use(express.text())
@@ -19,9 +25,8 @@ app
 	.use(passport.initialize())
 	.use(passport.session())
 
-if (process.env.NODE_ENV === 'development') {
-	app.use(cors({ credentials: true, origin: 'http://localhost:5173' }))
-}
+app.use(express.static('client/dist'))
+app.use('/static', express.static('server/static'))
 
 app.use('/api/v1', routes)
 

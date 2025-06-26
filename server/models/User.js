@@ -2,26 +2,13 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 
 const UserSchema = new mongoose.Schema({
-  uuid: { type: String },
+  referenceId: { type: String },
   email: { type: String, require: true, index: { unique: true, sparse: true } },
   password: { type: String, required: true, select: true },
   firstName: { type: String, required: true },
   middleName: { type: String },
   lastName: { type: String, required: true },
   suffix: { type: String },
-  addresses: [
-    {
-      name: { type: String, required: true, },
-      phone: { type: String, required: true, },
-      address: { type: String, required: true, },
-      street: { type: String, required: true, },
-      city: { type: String, required: true, },
-      region: { type: String, required: true, },
-      country: { type: String, required: true, },
-      postCode: { type: String, required: true, },
-      isDefault: { type: Boolean }
-    }
-  ],
   cart: [
     {
       productId: { type: String, required: true, },

@@ -3,25 +3,18 @@ import { mapProductResponse } from "../helpers/product-mapper.js";
 
 const getProducts = async (req, res, next) => {
   try {
-    const { id, name } = req.query
-    const isAdmin = req.user.role === 'admin'
-
-    if (id) {
-      const product = await Product.findOne({ uuid: id })
-      return res.status(200).send({ data: mapProductResponse(product) })
-    }
+    const { ids } = req.query
 
     // This query will only return the following properties
-    let selectQuery = '-_id uuid name label sku description price currency stockQuantity'
+    let selectQuery = '-_id referenceId name label description price currency imageUrl'
     let filter = {}
 
-    if (isAdmin) {
-      selectQuery += ' isActive'
-    } else {
-      filter.isActive = true
-    }
-    if (name) {
-      filter.name = { $regex: "keyword", $options: "i" }
+    const idArray = ids ? ids.split(',') : []; // Split comma-separated IDs into an array
+    if (idArray.length === 1) {
+      const product = await Product.findOne({ referenceId: idArray[0] })
+      return res.status(200).send({ data: mapProductResponse(product) })
+    } else if (idArray.length > 1) {
+      filter.referenceId = { $in: idArray };
     }
 
     const products = await Product.find(filter).select(selectQuery)
