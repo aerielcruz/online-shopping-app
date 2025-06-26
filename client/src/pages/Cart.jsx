@@ -4,12 +4,14 @@ import { useUser } from '../hooks/use-user';
 import { useCart } from '../hooks/use-cart';
 
 const CartItem = ({ product, fetchCart }) => {
+  const { fetchUser } = useUser();
   const { deleteCart, loading } = useCart();
 
   const handleDelete = async () => {
     const data = await deleteCart(product?.referenceId);
     if (data) {
       fetchCart()
+      fetchUser()
     }
   }
 
