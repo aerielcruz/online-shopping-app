@@ -40,7 +40,7 @@ export const RouteManager = () => {
         </Route>
 
         {/* Admin routes */}
-        <Route path='admin' element={<AdminLayout><AdminRoutes /></AdminLayout>}>
+        <Route path='admin' element={<AdminRoutes />}>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<Admin.Dashboard />} />
           <Route path="products" element={<Admin.Products />} />

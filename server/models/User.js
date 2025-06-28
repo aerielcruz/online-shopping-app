@@ -8,7 +8,6 @@ const UserSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   middleName: { type: String },
   lastName: { type: String, required: true },
-  suffix: { type: String },
   cart: [
     {
       productId: { type: String, required: true, },

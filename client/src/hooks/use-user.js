@@ -24,7 +24,8 @@ export const useUser = () => {
       setUser(res.data.data)
       return res.data.data
     } catch (err) {
-      alert('Failed to create new account.')
+      const errorMessage = err.response?.data?.error?.message || 'Failed to create new account.'
+      alert(errorMessage)
     } finally {
       setLoading(false)
     }

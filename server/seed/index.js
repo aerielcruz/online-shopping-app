@@ -1,9 +1,34 @@
 import 'dotenv/config'
 import mongoose from 'mongoose'
 import { v4 as uuidv4 } from 'uuid'
+import User from '../models/User.js'
 import Product from '../models/Product.js'
 import { generateImageUrl } from '../utils/generate-image-url.js'
-import { products } from '../data/products.js'
+import { users } from './data/users.js'
+import { products } from './data/products.js'
+
+const createUserFromSeed = (data) => {
+  const {
+    email,
+    password,
+    firstName,
+    middleName,
+    lastName,
+    role
+  } = data
+
+  const productModel = {
+    email,
+    password,
+    firstName,
+    middleName,
+    lastName,
+    cart: [],
+    role: role || 'customer'
+  }
+
+  return User.create(productModel)
+}
 
 const createProductFromSeed = (data) => {
   const {
@@ -33,15 +58,20 @@ const seed = async () => {
     console.log('Connected to MongoDB')
 
     // Clear old entries
+    await mongoose.connection.collection('users').deleteMany({})
     await mongoose.connection.collection('products').deleteMany({})
-    console.log('Old products cleared')
+    console.log('Old users and products cleared')
 
+    for (const data of users) {
+      await createUserFromSeed(data)
+      console.log(`User Seeded: ${data.email}`)
+    }
     for (const data of products) {
       await createProductFromSeed(data)
-      console.log(`Seeded: ${data.label}`)
+      console.log(`Product Seeded: ${data.label}`)
     }
 
-    console.log('✅ All products seeded.')
+    console.log('✅ All users and products seeded.')
     await mongoose.disconnect()
   } catch (err) {
     console.error('Seeding error:', err)

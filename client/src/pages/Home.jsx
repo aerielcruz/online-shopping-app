@@ -1,4 +1,4 @@
-import { Box, SimpleGrid, Text, Image, Modal, Button } from '@mantine/core';
+import { Box, SimpleGrid, Text, Center, Image, Modal, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Pressable } from '../components/Pressable';
 import { ProductCard } from '../components/ProductCard'
@@ -13,12 +13,14 @@ const ProductModal = ({ opened, onClose, product, isAddedToCart, handleAddToCart
       opened={opened}
       onClose={onClose}
       centered
-      size="auto"
+      size="sm"
       withCloseButton={false}
     >
       {product ? (
         <Box>
-          <Image mb='sm' src={product.imageUrl} h={300} w='auto' />
+          <Center>
+            <Image mb='sm' src={product.imageUrl} minh={300} w='auto' />
+          </Center>
           <Box mb='md'>
             <Text ta='center' size='xl' fw={500}>{product.label}</Text>
             <Text ta='center' size='xl'>{product.price} {product.currency}</Text>
@@ -92,7 +94,11 @@ export const Home = () => {
         <Text ta='center' fw={700} fz={28} c='#aaa'>Your Digital Avatar Marketplace</Text>
       </Box>
       <h2>Browse ({products.length})</h2>
-      <SimpleGrid cols={4} spacing='lg' my='xl'>
+      <SimpleGrid
+        cols={{ base: 1, xs: 2, sm: 3, md: 4, lg: 4 }}
+        spacing='lg'
+        my='xl'
+      >
         {products.map((product, i) => {
           return (
             <Pressable key={i} onClick={() => handleProduct(product)}>
