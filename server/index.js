@@ -10,6 +10,10 @@ import routes from './routes/index.js'
 const app = express()
 const port = 3000
 
+// For ES modules: get __dirname
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 // Must be set before using any routes or middlewares that require CORS
 // This is only for development purposes, in production you should set CORS headers properly
 if (process.env.NODE_ENV === 'development') {
@@ -25,10 +29,18 @@ app
 	.use(passport.initialize())
 	.use(passport.session())
 
-app.use(express.static('client/dist'))
-app.use('/static', express.static('server/static'))
+// Serve static files from Vite build
+app.use(express.static(path.join(__dirname, '../client/dist')))
+app.use('/static', express.static(path.join(__dirname, 'static')))
 
 app.use('/api/v1', routes)
+
+// SPA fallback: serve index.html for any non-API route
+app.get('*', (req, res) => {
+	// If the request starts with /api, skip to next handler
+	if (req.path.startsWith('/api')) return res.status(404).end()
+	res.sendFile(path.join(__dirname, '../client/dist/index.html'))
+})
 
 app.use(errorHandler)
 
