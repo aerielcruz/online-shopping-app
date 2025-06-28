@@ -1,5 +1,5 @@
 export const mapUserResponse = (user) => {
-  return {
+  const data = {
     email: user.email,
     firstName: user.firstName,
     middleName: user.middleName,
@@ -7,4 +7,8 @@ export const mapUserResponse = (user) => {
     suffix: user.suffix,
     cart: user.cart,
   }
+  if (user.role === 'admin') {
+    data.role = user.role
+  }
+  return data
 }

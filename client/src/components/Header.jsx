@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import cx from 'clsx';
 import {
+  IconLayoutDashboard,
+  IconUserCircle,
   IconBook,
   IconChartPie3,
   IconCode,
@@ -44,6 +45,7 @@ import { useDisclosure } from '@mantine/hooks';
 import classes from './css/Header.module.css';
 import { Logo } from './Logo';
 import { useUser } from "../hooks/use-user";
+import { useAuth } from "../hooks/use-auth";
 import { Pressable } from "./Pressable";
 
 const mockdata = [
@@ -79,13 +81,22 @@ const mockdata = [
   },
 ];
 
-const user = {
-  name: 'Jane Spoonfighter',
-  email: 'janspoon@fighter.dev',
-  image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
-};
+const ProfileMenu = ({ userMenuOpened, setUserMenuOpened }) => {
+  const navigate = useNavigate();
+  const theme = useMantineTheme();
+  const { logout, loading } = useAuth();
+  const { user } = useUser()
 
-const ProfileMenu = ({ setUserMenuOpened }) => {
+  const handleAdminDashboard = () => {
+    setUserMenuOpened(false);
+    navigate('/admin/dashboard');
+  };
+
+  const handleSettings = () => {
+    setUserMenuOpened(false);
+    navigate('/settings');
+  };
+
   return (
     <Menu
       width={260}
@@ -96,55 +107,20 @@ const ProfileMenu = ({ setUserMenuOpened }) => {
       withinPortal
     >
       <Menu.Target>
-        <UnstyledButton
-          className={cx(classes.user, { [classes.userActive]: userMenuOpened })}
-        >
-          <Group gap={7}>
-            <Avatar src={user.image} alt={user.name} radius="xl" size={20} />
-            <Text fw={500} size="sm" lh={1} mr={3}>
-              {user.name}
-            </Text>
-            <IconChevronDown size={12} stroke={1.5} />
-          </Group>
-        </UnstyledButton>
+        <Button variant="default" leftSection={<IconUserCircle size={16} />} rightSection={<IconChevronDown size={16} />}>
+          {user.firstName}
+        </Button>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item
-          leftSection={<IconHeart size={16} color={theme.colors.red[6]} stroke={1.5} />}
-        >
-          Liked posts
+        <Menu.Item leftSection={<IconLayoutDashboard size={16} stroke={1.5} />} onClick={handleAdminDashboard}>
+          Go to Admin Dashboard
         </Menu.Item>
-        <Menu.Item
-          leftSection={<IconStar size={16} color={theme.colors.yellow[6]} stroke={1.5} />}
-        >
-          Saved posts
+        <Menu.Item leftSection={<IconSettings size={16} stroke={1.5} />} onClick={handleSettings}>
+          Account Settings
         </Menu.Item>
-        <Menu.Item
-          leftSection={<IconMessage size={16} color={theme.colors.blue[6]} stroke={1.5} />}
-        >
-          Your comments
-        </Menu.Item>
-
-        <Menu.Label>Settings</Menu.Label>
-        <Menu.Item leftSection={<IconSettings size={16} stroke={1.5} />}>
-          Account settings
-        </Menu.Item>
-        <Menu.Item leftSection={<IconSwitchHorizontal size={16} stroke={1.5} />}>
-          Change account
-        </Menu.Item>
-        <Menu.Item leftSection={<IconLogout size={16} stroke={1.5} />}>Logout</Menu.Item>
-
-        <Menu.Divider />
-
-        <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item leftSection={<IconPlayerPause size={16} stroke={1.5} />}>
-          Pause subscription
-        </Menu.Item>
-        <Menu.Item color="red" leftSection={<IconTrash size={16} stroke={1.5} />}>
-          Delete account
-        </Menu.Item>
+        <Menu.Item leftSection={<IconLogout size={16} stroke={1.5} />} onClick={logout}>Logout</Menu.Item>
       </Menu.Dropdown>
-    </Menu>
+    </Menu >
   )
 }
 
@@ -181,31 +157,15 @@ export function Header() {
         <header className={classes.header}>
           <Group justify="space-between" h="100%">
             <Logo style={{ cursor: 'pointer' }} onClick={() => navigate('/')} />
-            {/* 
-          <Group h="100%" gap={0} visibleFrom="sm">
-            <a href="#" className={classes.link}>
-              Home
-            </a>
-            <a href="#" className={classes.link}>
-              Browse
-            </a>
-            <a href="#" className={classes.link}>
-              Academy
-            </a>
-          </Group> */}
 
             {user ? (
               <Group visibleFrom="sm">
                 <Button variant="default" onClick={() => navigate('/cart')}>Cart ({user.cart?.length})</Button>
-                <Button variant="default" onClick={() => navigate('/profile')}>Profile</Button>
+                <ProfileMenu userMenuOpened={userMenuOpened} setUserMenuOpened={setUserMenuOpened} />
               </Group>
             ) : (
               <Button variant="default" onClick={() => navigate('/login')}>Log in</Button>
             )}
-
-
-            {/* <ProfileMenu  /> */}
-
 
             <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
           </Group>
@@ -251,18 +211,6 @@ export function Header() {
           </ScrollArea>
         </Drawer>
       </Box>
-      {/* <Box>
-        <Group px='md' py='xs' gap='md'>
-          <Text>Categories</Text>
-          <Button variant="transparent">All</Button>
-          <Button variant="transparent">Category 2</Button>
-          <Button variant="transparent">Category 3</Button>
-          <Button variant="transparent">Category 4</Button>
-          <Button variant="transparent">Category 5</Button>
-          <Button variant="transparent">Category 6</Button>
-        </Group>
-        <Divider />
-      </Box> */}
     </Box>
   );
 }

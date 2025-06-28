@@ -68,7 +68,8 @@ export function Footer() {
       </Container>
       <Container className={classes.afterFooter}>
         <Text c="dimmed" size="sm">
-          © 2020 mantine.dev. All rights reserved.
+          © 2025 Doodleverse. All rights reserved. <br />
+          Built by Aeriel Matthew Cruz.
         </Text>
 
         <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">

@@ -88,11 +88,10 @@ export const Home = () => {
         handleRemoveFromCart={handleRemoveFromCart}
       />
       <Box p={100} my='xl' style={{ backgroundColor: '#1A1A1A', borderRadius: '8px' }}>
-        <Text ta='center' fw={700} fz={60} c='#fff'>FrameBit</Text>
-        <Text ta='center' fw={700} fz={28} c='#fff'>Expression Engineered. Identity Framed.</Text>
-        <Text mt='sm' ta='center' fw={700} fz={20} c='#aaa'>Your Digital Avatar Marketplace</Text>
+        <Text ta='center' fw={700} fz={60} c='#ffffff'>Doodleverse</Text>
+        <Text ta='center' fw={700} fz={28} c='#aaa'>Your Digital Avatar Marketplace</Text>
       </Box>
-      <h2>Browse</h2>
+      <h2>Browse ({products.length})</h2>
       <SimpleGrid cols={4} spacing='lg' my='xl'>
         {products.map((product, i) => {
           return (

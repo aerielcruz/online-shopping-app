@@ -49,7 +49,7 @@ const updateProduct = async (req, res, next) => {
       currency,
     }
 
-    const product = await Product.findOne(
+    const product = await Product.findOneAndUpdate(
       { referenceId },
       { $set: productModel },
       { new: true }
@@ -62,8 +62,8 @@ const updateProduct = async (req, res, next) => {
 
 const deleteProduct = async (req, res, next) => {
   try {
-    const { uuid } = req.body
-    await Product.findOneAndDelete({ uuid })
+    const { referenceId } = req.body
+    await Product.findOneAndDelete({ referenceId })
     res.sendStatus(200)
   } catch (err) {
     next(err)
