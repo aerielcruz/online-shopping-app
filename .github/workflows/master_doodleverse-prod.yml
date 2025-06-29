@@ -26,13 +26,14 @@ jobs:
 
       - name: npm install, build, and test
         run: |
+          npm i -g vite
           cd server
           npm i
           cd ../client
           npm i
           npm run build
           cd ..
-          
+
           # npm ci
           # NODE_ENV=production npm run build
           # npm run start
