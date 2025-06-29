@@ -38,8 +38,8 @@ jobs:
           # NODE_ENV=production npm run build
           # npm run start
 
-          cd server
-          node index.js
+          # cd server
+          # node index.js
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           SESSION_SECRET: ${{secrets.SESSION_SECRET}}
