@@ -26,7 +26,8 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          npm run build
+          npm ci
+          NODE_ENV=production npm run build
           # npm run start
           cd server
           node index.js
