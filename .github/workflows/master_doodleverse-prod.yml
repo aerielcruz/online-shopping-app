@@ -31,6 +31,9 @@ jobs:
           node index.js
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          SESSION_SECRET: ${{secrets.SESSION_SECRET}}
+          DB_CONNECTION_STRING: ${{secrets.DB_CONNECTION_STRING}}
+          NODE_ENV: ${{secrets.NODE_ENV}}
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
