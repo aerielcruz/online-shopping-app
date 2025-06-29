@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
+import path from 'path';
 import { fileURLToPath } from 'url';
 import { connectDatabase } from './middlewares/connect-database.js'
 import { session } from './middlewares/session.js'
