@@ -8,7 +8,7 @@ import { errorHandler } from './middlewares/error-handler.js'
 import routes from './routes/index.js'
 
 const app = express()
-const port = 3000
+const PORT = process.env.PORT ||3000
 
 // For ES modules: get __dirname
 const __filename = fileURLToPath(import.meta.url)
@@ -44,7 +44,7 @@ app.get('*', (req, res) => {
 
 app.use(errorHandler)
 
-app.listen(port, async () => {
+app.listen(PORT, async () => {
 	await connectDatabase()
-	console.log(`Example app listening on port ${port}`)
+	console.log(`Example app listening on port ${PORT}`)
 })
