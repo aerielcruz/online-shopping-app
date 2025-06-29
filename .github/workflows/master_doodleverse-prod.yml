@@ -32,7 +32,7 @@ jobs:
           cd ../client
           npm i
           npm run build
-          cd ..
+          # cd ..
 
           # npm ci
           # NODE_ENV=production npm run build
