@@ -22,6 +22,7 @@ console.log('__dirname', __dirname)
 // This is only for development purposes, in production you should set CORS headers properly
 if (process.env.NODE_ENV === 'development') {
 	app.use(cors({ credentials: true, origin: 'http://localhost:5173' }))
+	app.use(cors({ credentials: true, origin: 'http://localhost:4173' }))
 }
 
 app

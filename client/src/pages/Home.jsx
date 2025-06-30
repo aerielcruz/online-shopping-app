@@ -51,7 +51,9 @@ export const Home = () => {
 
   const fetchProducts = async () => {
     const products = await getProducts();
-    setProducts(products);
+    if (products) {
+      setProducts(products);
+    }
   }
 
   const handleProduct = async (product) => {
