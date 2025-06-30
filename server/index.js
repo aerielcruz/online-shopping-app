@@ -46,11 +46,11 @@ app.use('/api/v1', routes)
 // 	res.sendFile(path.join(__dirname, '../client/dist/index.html'))
 // })
 
-app.get('*', (req, res) => {
-	process.env.NODE_ENV === 'development'
-		? res.send('Development Mode!!! You probably wanted the web app (localhost:3000) or the API (localhost:3001/api)')
-		: res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
-
+app.get('/{*any}', (req, res) => {
+	res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
+	// process.env.NODE_ENV === 'development'
+	// 	? res.send('Development Mode!!! You probably wanted the web app (localhost:3000) or the API (localhost:3001/api)')
+	// 	: res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
 })
 
 app.use(errorHandler)
