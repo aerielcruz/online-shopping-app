@@ -26,20 +26,11 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          # npm i -g vite
           cd server
           npm i
           cd ../client
           npm i
           npm run build
-          # cd ..
-
-          # npm ci
-          # NODE_ENV=production npm run build
-          # npm run start
-
-          # cd server
-          # node index.js
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           SESSION_SECRET: ${{secrets.SESSION_SECRET}}
