@@ -6,13 +6,17 @@ const getUserFromSession = () => {
   const user = sessionStorage.getItem("user");
   if (!user) return null;
 
-  const parsedUser = JSON.parse(user);
-  if (parsedUser) {
-    return Object.keys(parsedUser).length > 0 ? parsedUser : null;
+  try {
+    const parsedUser = JSON.parse(user);
+    if (parsedUser && typeof parsedUser === 'object' && Object.keys(parsedUser).length > 0) {
+      return parsedUser;
+    }
+  } catch (err) {
+    console.error("Failed to parse session user JSON:", err);
   }
 
-  return null
-}
+  return null;
+};
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
