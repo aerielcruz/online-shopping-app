@@ -37,12 +37,12 @@ app.use('/static', express.static(path.join(__dirname, 'static')))
 
 app.use('/api/v1', routes)
 
-// SPA fallback: serve index.html for any non-API route
-app.get('/{*any}', (req, res) => {
-	// If the request starts with /api, skip to next handler
-	if (req.path.startsWith('/api')) return res.status(404).end()
-	res.sendFile(path.join(__dirname, '../client/dist/index.html'))
-})
+// // SPA fallback: serve index.html for any non-API route
+// app.get('/{*any}', (req, res) => {
+// 	// If the request starts with /api, skip to next handler
+// 	if (req.path.startsWith('/api')) return res.status(404).end()
+// 	res.sendFile(path.join(__dirname, '../client/dist/index.html'))
+// })
 
 app.use(errorHandler)
 
