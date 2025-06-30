@@ -7,7 +7,11 @@ const getUserFromSession = () => {
   if (!user) return null;
 
   const parsedUser = JSON.parse(user);
-  return Object.keys(parsedUser).length > 0 ? parsedUser : null;
+  if (parsedUser) {
+    return Object.keys(parsedUser).length > 0 ? parsedUser : null;
+  }
+
+  return null
 }
 
 export const UserProvider = ({ children }) => {

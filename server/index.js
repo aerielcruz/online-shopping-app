@@ -18,11 +18,25 @@ const __dirname = path.dirname(__filename)
 console.log('__filename', __filename)
 console.log('__dirname', __dirname)
 
+const allowedOrigins = [
+	'http://localhost:5173', // for local dev
+	'http://localhost:4173', // for local preview
+	process.env.VITE_API_URL // deployed frontend url
+];
+
 // Must be set before using any routes or middlewares that require CORS
 // This is only for development purposes, in production you should set CORS headers properly
 if (process.env.NODE_ENV === 'development') {
-	app.use(cors({ credentials: true, origin: 'http://localhost:5173' }))
-	app.use(cors({ credentials: true, origin: 'http://localhost:4173' }))
+	app.use(cors({
+		origin: function (origin, callback) {
+			// Allow non-browser requests (like curl or Postman with no origin)
+			if (!origin || allowedOrigins.includes(origin)) {
+				return callback(null, true);
+			}
+			return callback(new Error('Not allowed by CORS'));
+		},
+		credentials: true // only if you're using cookies or auth headers
+	}));
 }
 
 app
@@ -40,18 +54,8 @@ app.use('/static', express.static(path.join(__dirname, 'static')))
 
 app.use('/api/v1', routes)
 
-// // SPA fallback: serve index.html for any non-API route
-// app.get('*', (req, res) => {
-// 	// If the request starts with /api, skip to next handler
-// 	if (req.path.startsWith('/api')) return res.status(404).end()
-// 	res.sendFile(path.join(__dirname, '../client/dist/index.html'))
-// })
-
 app.get('/{*any}', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'))
-	// process.env.NODE_ENV === 'development'
-	// 	? res.send('Development Mode!!! You probably wanted the web app (localhost:3000) or the API (localhost:3001/api)')
-	// 	: res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
 })
 
 app.use(errorHandler)
