@@ -47,7 +47,7 @@ app.use('/api/v1', routes)
 // })
 
 app.get('/{*any}', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
+	res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'))
 	// process.env.NODE_ENV === 'development'
 	// 	? res.send('Development Mode!!! You probably wanted the web app (localhost:3000) or the API (localhost:3001/api)')
 	// 	: res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
