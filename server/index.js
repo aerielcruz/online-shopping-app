@@ -10,7 +10,7 @@ import { errorHandler } from './middlewares/error-handler.js'
 import routes from './routes/index.js'
 
 const app = express()
-const PORT = process.env.PORT ||3000
+const PORT = process.env.PORT || 3000
 
 // For ES modules: get __dirname
 const __filename = fileURLToPath(import.meta.url)
@@ -39,11 +39,18 @@ app.use('/static', express.static(path.join(__dirname, 'static')))
 
 app.use('/api/v1', routes)
 
-// SPA fallback: serve index.html for any non-API route
+// // SPA fallback: serve index.html for any non-API route
+// app.get('*', (req, res) => {
+// 	// If the request starts with /api, skip to next handler
+// 	if (req.path.startsWith('/api')) return res.status(404).end()
+// 	res.sendFile(path.join(__dirname, '../client/dist/index.html'))
+// })
+
 app.get('*', (req, res) => {
-	// If the request starts with /api, skip to next handler
-	if (req.path.startsWith('/api')) return res.status(404).end()
-	res.sendFile(path.join(__dirname, '../client/dist/index.html'))
+	process.env.NODE_ENV === 'development'
+		? res.send('Development Mode!!! You probably wanted the web app (localhost:3000) or the API (localhost:3001/api)')
+		: res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
+
 })
 
 app.use(errorHandler)
