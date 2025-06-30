@@ -19,15 +19,10 @@ const getUserFromSession = () => {
 };
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(getUserFromSession);
 
   useEffect(() => {
-    if (user) {
-      sessionStorage.setItem("user", JSON.stringify(user))
-    } else {
-      const user = getUserFromSession()
-      setUser(user)
-    }
+    sessionStorage.setItem("user", JSON.stringify(user))
   }, [user])
 
   return (

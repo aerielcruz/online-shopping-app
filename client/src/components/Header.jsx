@@ -78,7 +78,7 @@ export function Header() {
               <Button visibleFrom="sm" variant="default" onClick={() => handleNavigate('/')}>Browse</Button>
             </Group>
 
-            {user ? (
+            {user && user.email ? (
               <Group visibleFrom="sm">
                 <Button variant="default" onClick={() => handleNavigate('/cart')}>Cart ({user.cart?.length})</Button>
                 <ProfileMenu handleNavigate={handleNavigate} handleLogout={handleLogout} />

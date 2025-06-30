@@ -3,5 +3,5 @@ import { useUser } from '../hooks/use-user';
 
 export const ProtectedRoutes = () => {
   const { user } = useUser();
-  return user ? <Outlet /> : <Navigate to="/" replace />;
+  return user && user.email ? <Outlet /> : <Navigate to="/" replace />;
 };

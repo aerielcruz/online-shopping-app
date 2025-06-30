@@ -3,5 +3,5 @@ import { useUser } from '../hooks/use-user';
 
 export const AuthRoutes = () => {
   const { user } = useUser();
-  return user ? <Navigate to="/" replace /> : <Outlet />;
+  return user && user.email ? <Navigate to="/" replace /> : <Outlet />;
 };

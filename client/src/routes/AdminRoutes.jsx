@@ -4,7 +4,7 @@ import { AdminLayout } from '../layouts/AdminLayout';
 
 export const AdminRoutes = () => {
   const { user } = useUser();
-  return user && user.role === 'admin'
+  return user && user.email && user.role === 'admin'
     ? <AdminLayout><Outlet /></AdminLayout>
     : <Navigate to="/" replace />;
 };
