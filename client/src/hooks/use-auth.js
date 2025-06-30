@@ -29,6 +29,7 @@ export const useAuth = () => {
       setLoading(true)
       await client.delete('/auth')
       setUser(null)
+      sessionStorage.removeItem('user');
     } catch (err) {
       alert('Failed to logout. Please try again later.')
     } finally {

@@ -4,7 +4,13 @@ export const UserContext = createContext();
 
 const getInitialState = () => {
   const user = sessionStorage.getItem("user");
-  return user ? JSON.parse(user) : null
+  if (user) {
+    const parsedUser = JSON.parse(user)
+    if (Object.keys(parsedUser).length === 0) {
+      return parsedUser
+    }
+  }
+  return null
 }
 
 export const UserProvider = ({ children }) => {
