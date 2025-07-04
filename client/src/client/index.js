@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const apiUrl = 'https://sn7xmm3ens.ap-southeast-2.awsapprunner.com'
+const apiUrl = 'https://hct2egtfna.ap-southeast-2.awsapprunner.com'
 
 export const client = axios.create({
   baseURL: (apiUrl || 'http://localhost:3000') + '/api/v1',
