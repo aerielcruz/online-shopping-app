@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "install": "npm run install:server && npm run install:client",
+    "install": "npm i && npm run install:server && npm run install:client",
     "install:server": "cd server && npm i",
     "install:client": "cd client && npm i",
     "server": "cd server && npm run dev",
